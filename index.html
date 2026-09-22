@@ -4,9 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TH Bezerra Site — Sites e landing pages para negócios locais</title>
+<meta name="description" content="Crio sites e landing pages claros, rápidos e prontos para o cliente te chamar — Guarujá e região.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <style>
   :root {
     --bg: #0B0D12;
@@ -18,7 +21,6 @@
     --orange: #F5A623;
     --orange-deep: #D4890F;
     --green: #25D366;
-    --blue: #3B82F6;
     --radius: 16px;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -28,6 +30,7 @@
     background: var(--bg);
     color: var(--text);
     line-height: 1.55;
+    overflow-x: hidden;
   }
   img { max-width: 100%; display: block; }
   a { color: inherit; text-decoration: none; }
@@ -36,8 +39,8 @@
   /* Header */
   header {
     position: sticky; top: 0; z-index: 50;
-    background: rgba(11, 13, 18, 0.88);
-    backdrop-filter: blur(12px);
+    background: rgba(11, 13, 18, 0.9);
+    backdrop-filter: blur(14px);
     border-bottom: 1px solid var(--line);
   }
   header .wrap {
@@ -59,31 +62,28 @@
     display: block; font-weight: 500; font-size: 0.68rem;
     color: var(--muted); letter-spacing: 0.02em;
   }
-  .nav { display: flex; align-items: center; gap: 6px; }
+  .nav { display: flex; align-items: center; gap: 4px; }
   .nav a {
     font-size: 0.88rem; font-weight: 500; color: var(--muted);
     padding: 8px 12px; border-radius: 999px;
+    transition: color .15s, background .15s;
   }
   .nav a:hover { color: var(--text); background: var(--bg-card); }
   .btn {
     display: inline-flex; align-items: center; justify-content: center; gap: 8px;
     font-weight: 600; font-size: 0.92rem;
     padding: 12px 20px; border-radius: 999px;
-    transition: background 0.15s, transform 0.1s, border-color 0.15s;
+    transition: background .15s, transform .1s, border-color .15s;
   }
   .btn:active { transform: translateY(1px); }
-  .btn-primary {
-    background: var(--orange); color: #1A1200;
-  }
+  .btn-primary { background: var(--orange); color: #1A1200; }
   .btn-primary:hover { background: #FFB84A; }
   .btn-ghost {
     border: 1px solid var(--line); color: var(--text);
     background: transparent;
   }
   .btn-ghost:hover { border-color: var(--orange); color: var(--orange); }
-  .btn-wa {
-    background: var(--green); color: #05391A;
-  }
+  .btn-wa { background: var(--green); color: #05391A; }
   .btn-wa:hover { background: #2FE075; }
 
   /* Hero */
@@ -135,10 +135,7 @@
     font-size: 0.85rem; color: var(--muted);
   }
   .hero-meta strong { color: var(--text); }
-
-  .hero-visual {
-    position: relative;
-  }
+  .hero-visual { position: relative; }
   .hero-frame {
     background: var(--bg-card);
     border: 1px solid var(--line);
@@ -163,6 +160,12 @@
   .hero-badge.b { bottom: 28px; right: -8px; }
   .hero-badge span { color: var(--orange); }
 
+  /* Anim helpers */
+  .reveal { opacity: 0; transform: translateY(28px); }
+  .reveal-left { opacity: 0; transform: translateX(-32px); }
+  .reveal-right { opacity: 0; transform: translateX(32px); }
+  .reveal-scale { opacity: 0; transform: scale(0.94); }
+
   /* Strip */
   .strip {
     border-top: 1px solid var(--line);
@@ -183,7 +186,6 @@
   }
   .strip-item span { font-size: 0.78rem; color: var(--muted); }
 
-  /* Sections */
   section { padding: 72px 0; }
   .section-head {
     max-width: 560px;
@@ -219,11 +221,11 @@
     border: 1px solid var(--line);
     border-radius: 18px;
     overflow: hidden;
-    transition: border-color 0.2s, transform 0.15s;
+    transition: border-color 0.2s, transform 0.2s;
   }
   .project:hover {
     border-color: #3A4254;
-    transform: translateY(-3px);
+    transform: translateY(-4px);
   }
   .project-preview {
     height: 160px;
@@ -234,8 +236,9 @@
   .project-preview img {
     width: 100%; height: 100%;
     object-fit: cover;
-    opacity: 0.9;
+    transition: transform 0.4s ease;
   }
+  .project:hover .project-preview img { transform: scale(1.05); }
   .project-preview .tag {
     position: absolute; top: 12px; left: 12px;
     background: rgba(11,13,18,0.85);
@@ -256,7 +259,6 @@
     font-size: 0.84rem; font-weight: 600;
     color: var(--orange);
   }
-  .project-link:hover { text-decoration: underline; }
 
   /* Services */
   .services-grid {
@@ -269,6 +271,11 @@
     border: 1px solid var(--line);
     border-radius: 16px;
     padding: 24px 20px;
+    transition: border-color .2s, transform .2s;
+  }
+  .service:hover {
+    border-color: #3A4254;
+    transform: translateY(-3px);
   }
   .service-ico {
     width: 44px; height: 44px;
@@ -284,7 +291,11 @@
   .service p { font-size: 0.88rem; color: var(--muted); }
 
   /* Process */
-  .process { background: var(--bg-2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .process {
+    background: var(--bg-2);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
   .steps {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -311,12 +322,12 @@
   }
   .step p { font-size: 0.88rem; color: var(--muted); }
 
-  /* About / area */
+  /* About */
   .about-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 40px;
-    align-items: center;
+    gap: 24px;
+    align-items: stretch;
   }
   .about-card {
     background: var(--bg-card);
@@ -325,7 +336,7 @@
     padding: 28px;
   }
   .about-card h3 {
-    font-size: 1.2rem; font-weight: 700;
+    font-size: 1.15rem; font-weight: 700;
     margin-bottom: 12px;
   }
   .about-card p {
@@ -345,10 +356,7 @@
   }
 
   /* CTA final */
-  .final {
-    text-align: center;
-    padding: 80px 0;
-  }
+  .final { text-align: center; padding: 80px 0; }
   .final-box {
     background: linear-gradient(145deg, #1A1208, #161A22);
     border: 1px solid rgba(245,166,35,0.25);
@@ -365,7 +373,6 @@
   }
   .final-box .cta-row { justify-content: center; }
 
-  /* Footer */
   footer {
     border-top: 1px solid var(--line);
     padding: 28px 0;
@@ -390,7 +397,7 @@
     section { padding: 48px 0; }
     .projects-grid { grid-template-columns: 1fr 1fr; gap: 14px; }
     .services-grid, .steps { grid-template-columns: 1fr; }
-    .about-grid { grid-template-columns: 1fr; gap: 24px; }
+    .about-grid { grid-template-columns: 1fr; gap: 16px; }
     .final { padding: 48px 0; }
     .final-box { padding: 32px 20px; }
     .final-box .cta-row { flex-direction: column; }
@@ -398,7 +405,6 @@
   }
   @media (max-width: 520px) {
     .projects-grid { grid-template-columns: 1fr; }
-    .strip .wrap { grid-template-columns: 1fr 1fr; }
     .hero h1 { font-size: 1.5rem; }
   }
 </style>
@@ -427,19 +433,19 @@
 <section class="hero">
   <div class="wrap">
     <div>
-      <div class="pill">Sites e landing pages para negócios locais</div>
-      <h1>Seu negócio precisa de um site que <span>gera contato</span>, não só uma página bonita.</h1>
-      <p class="lead">Crio sites e landing pages claros, rápidos e prontos para o cliente te chamar — pensados para quem atende em Guarujá e região.</p>
-      <div class="cta-row">
+      <div class="pill reveal">Sites e landing pages para negócios locais</div>
+      <h1 class="reveal">Seu negócio precisa de um site que <span>gera contato</span>, não só uma página bonita.</h1>
+      <p class="lead reveal">Crio sites e landing pages claros, rápidos e prontos para o cliente te chamar — pensados para quem atende em Guarujá e região.</p>
+      <div class="cta-row reveal">
         <a class="btn btn-primary" href="https://wa.me/5513997914515" target="_blank" rel="noopener">Pedir orçamento</a>
         <a class="btn btn-ghost" href="#projetos">Ver projetos</a>
       </div>
-      <div class="hero-meta">
+      <div class="hero-meta reveal">
         <div><strong>Vicente de Carvalho</strong> · Guarujá</div>
         <div><strong>WhatsApp</strong> · resposta direta</div>
       </div>
     </div>
-    <div class="hero-visual">
+    <div class="hero-visual reveal-right">
       <div class="hero-frame">
         <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=900&q=80" alt="Criação de sites e landing pages">
       </div>
@@ -451,22 +457,22 @@
 
 <div class="strip">
   <div class="wrap">
-    <div class="strip-item"><strong>7+</strong><span>projetos entregues</span></div>
-    <div class="strip-item"><strong>Local</strong><span>Guarujá e região</span></div>
-    <div class="strip-item"><strong>Rápido</strong><span>do briefing à entrega</span></div>
-    <div class="strip-item"><strong>Direto</strong><span>sem burocracia</span></div>
+    <div class="strip-item reveal-scale"><strong>7+</strong><span>projetos entregues</span></div>
+    <div class="strip-item reveal-scale"><strong>Local</strong><span>Guarujá e região</span></div>
+    <div class="strip-item reveal-scale"><strong>Rápido</strong><span>do briefing à entrega</span></div>
+    <div class="strip-item reveal-scale"><strong>Direto</strong><span>sem burocracia</span></div>
   </div>
 </div>
 
 <section id="projetos">
   <div class="wrap">
-    <div class="section-head center">
+    <div class="section-head center reveal">
       <div class="kicker">Portfólio</div>
       <h2>Projetos que já saíram do papel</h2>
       <p>Sites e landing pages feitos para negócios reais — pet, obra, elétrica, contabilidade e mais.</p>
     </div>
     <div class="projects-grid">
-      <a class="project" href="https://pet02.vercel.app/" target="_blank" rel="noopener">
+      <a class="project reveal" href="https://pet02.vercel.app/" target="_blank" rel="noopener">
         <div class="project-preview">
           <img src="https://images.unsplash.com/photo-1552053831-71594a27632d?w=600&q=80" alt="PET02">
           <span class="tag">Pet / estética</span>
@@ -477,7 +483,7 @@
           <span class="project-link">Ver site →</span>
         </div>
       </a>
-      <a class="project" href="https://g5-faztudo-proposta.vercel.app/" target="_blank" rel="noopener">
+      <a class="project reveal" href="https://g5-faztudo-proposta.vercel.app/" target="_blank" rel="noopener">
         <div class="project-preview">
           <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&q=80" alt="G5 Faz Tudo">
           <span class="tag">Construção</span>
@@ -488,7 +494,7 @@
           <span class="project-link">Ver site →</span>
         </div>
       </a>
-      <a class="project" href="https://eletricista-24h-guaruja.vercel.app/" target="_blank" rel="noopener">
+      <a class="project reveal" href="https://eletricista-24h-guaruja.vercel.app/" target="_blank" rel="noopener">
         <div class="project-preview">
           <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=600&q=80" alt="Eletricista 24h">
           <span class="tag">Serviço 24h</span>
@@ -499,7 +505,7 @@
           <span class="project-link">Ver site →</span>
         </div>
       </a>
-      <a class="project" href="https://contsm.vercel.app/" target="_blank" rel="noopener">
+      <a class="project reveal" href="https://contsm.vercel.app/" target="_blank" rel="noopener">
         <div class="project-preview">
           <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=600&q=80" alt="ContS&M">
           <span class="tag">Contabilidade</span>
@@ -510,7 +516,7 @@
           <span class="project-link">Ver site →</span>
         </div>
       </a>
-      <a class="project" href="https://serralheria-e-vidracaria.vercel.app/" target="_blank" rel="noopener">
+      <a class="project reveal" href="https://serralheria-e-vidracaria.vercel.app/" target="_blank" rel="noopener">
         <div class="project-preview">
           <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&q=80" alt="Serralheria">
           <span class="tag">Alumínio e vidro</span>
@@ -521,7 +527,7 @@
           <span class="project-link">Ver site →</span>
         </div>
       </a>
-      <a class="project" href="https://produto-minimo.vercel.app/" target="_blank" rel="noopener">
+      <a class="project reveal" href="https://produto-minimo.vercel.app/" target="_blank" rel="noopener">
         <div class="project-preview">
           <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&q=80" alt="Produto Mínimo">
           <span class="tag">Produto digital</span>
@@ -538,23 +544,23 @@
 
 <section id="servicos">
   <div class="wrap">
-    <div class="section-head center">
+    <div class="section-head center reveal">
       <div class="kicker">O que eu faço</div>
       <h2>Foco no que gera resultado pro seu negócio</h2>
       <p>Sem pacote genérico de agência. Trabalho no que você precisa para aparecer e receber contato.</p>
     </div>
     <div class="services-grid">
-      <div class="service">
+      <div class="service reveal">
         <div class="service-ico">🌐</div>
         <h3>Criação de sites</h3>
         <p>Site institucional ou página de serviços, responsivo, rápido e com seus contatos em destaque.</p>
       </div>
-      <div class="service">
+      <div class="service reveal">
         <div class="service-ico">📄</div>
         <h3>Landing pages</h3>
         <p>Página única focada em uma oferta — orçamento, agendamento ou WhatsApp.</p>
       </div>
-      <div class="service">
+      <div class="service reveal">
         <div class="service-ico">🔄</div>
         <h3>Ajustes e melhorias</h3>
         <p>Atualização de textos, imagens, seções e correções em sites que você já tem.</p>
@@ -565,23 +571,23 @@
 
 <section class="process" id="como">
   <div class="wrap">
-    <div class="section-head center">
+    <div class="section-head center reveal">
       <div class="kicker">Como funciona</div>
       <h2>Do primeiro contato à entrega, sem enrolação</h2>
       <p>Processo simples, combinado no WhatsApp.</p>
     </div>
     <div class="steps">
-      <div class="step">
+      <div class="step reveal">
         <div class="step-num">1</div>
         <h3>Você conta o que precisa</h3>
         <p>Ramo, serviços, telefone e o que o cliente deve fazer no site (ligar, agendar, pedir orçamento).</p>
       </div>
-      <div class="step">
+      <div class="step reveal">
         <div class="step-num">2</div>
         <h3>Eu monto a estrutura</h3>
         <p>Textos, seções e visual alinhados ao seu negócio. Você revisa e pede ajustes.</p>
       </div>
-      <div class="step">
+      <div class="step reveal">
         <div class="step-num">3</div>
         <h3>Entrega e publicação</h3>
         <p>Site pronto, no ar, com seus contatos. Você recebe o link e pode divulgar.</p>
@@ -593,7 +599,7 @@
 <section>
   <div class="wrap">
     <div class="about-grid">
-      <div class="about-card">
+      <div class="about-card reveal-left">
         <div class="kicker">Sobre</div>
         <h3>TH Bezerra Site</h3>
         <p>Faço sites e landing pages para quem atende cliente na região: pet shop, obra, elétrica, contabilidade, comércio e prestadores de serviço.</p>
@@ -604,7 +610,7 @@
           <span>WhatsApp direto</span>
         </div>
       </div>
-      <div class="about-card">
+      <div class="about-card reveal-right">
         <div class="kicker">Para quem é</div>
         <h3>Para o negócio local que quer mais do que post no Instagram</h3>
         <p>Se você ainda depende só de indicação ou rede social, o site organiza sua oferta e facilita o primeiro contato.</p>
@@ -616,7 +622,7 @@
 
 <section class="final" id="contato">
   <div class="wrap">
-    <div class="final-box">
+    <div class="final-box reveal-scale">
       <h2>Vamos falar do seu site?</h2>
       <p>Me chama no WhatsApp, conta o que seu negócio faz e o que você precisa. Resposta direta.</p>
       <div class="cta-row">
@@ -637,5 +643,65 @@
   </div>
 </footer>
 
+<script>
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Entrada do hero (tipo Framer Motion)
+  const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+  heroTl
+    .to('.hero .reveal', { opacity: 1, y: 0, duration: 0.7, stagger: 0.12 })
+    .to('.hero .reveal-right', { opacity: 1, x: 0, duration: 0.8 }, '-=0.4');
+
+  // Strip
+  gsap.to('.strip .reveal-scale', {
+    opacity: 1, scale: 1, duration: 0.55, stagger: 0.08, ease: 'power2.out',
+    scrollTrigger: { trigger: '.strip', start: 'top 85%' }
+  });
+
+  // Seções com scroll (GSAP ScrollTrigger)
+  document.querySelectorAll('section .section-head.reveal').forEach((el) => {
+    gsap.to(el, {
+      opacity: 1, y: 0, duration: 0.65, ease: 'power3.out',
+      scrollTrigger: { trigger: el, start: 'top 88%' }
+    });
+  });
+
+  gsap.utils.toArray('.projects-grid .project').forEach((card, i) => {
+    gsap.to(card, {
+      opacity: 1, y: 0, duration: 0.55, delay: (i % 3) * 0.08, ease: 'power2.out',
+      scrollTrigger: { trigger: card, start: 'top 90%' }
+    });
+  });
+
+  gsap.utils.toArray('.services-grid .service, .steps .step').forEach((card, i) => {
+    gsap.to(card, {
+      opacity: 1, y: 0, duration: 0.55, delay: (i % 3) * 0.1, ease: 'power2.out',
+      scrollTrigger: { trigger: card, start: 'top 90%' }
+    });
+  });
+
+  gsap.to('.about-card.reveal-left', {
+    opacity: 1, x: 0, duration: 0.7, ease: 'power3.out',
+    scrollTrigger: { trigger: '.about-grid', start: 'top 85%' }
+  });
+  gsap.to('.about-card.reveal-right', {
+    opacity: 1, x: 0, duration: 0.7, ease: 'power3.out',
+    scrollTrigger: { trigger: '.about-grid', start: 'top 85%' }
+  });
+
+  gsap.to('.final-box.reveal-scale', {
+    opacity: 1, scale: 1, duration: 0.7, ease: 'power2.out',
+    scrollTrigger: { trigger: '.final-box', start: 'top 88%' }
+  });
+
+  // Mobile: animações mais leves
+  ScrollTrigger.matchMedia({
+    '(max-width: 768px)': function () {
+      gsap.set(['.reveal', '.reveal-left', '.reveal-right', '.reveal-scale'], {
+        clearProps: 'transform'
+      });
+    }
+  });
+</script>
 </body>
 </html>
